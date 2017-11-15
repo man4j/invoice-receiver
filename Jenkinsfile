@@ -33,7 +33,7 @@ pipeline {
     }
     stage('Connect to environment') {
       steps {
-        sh 'curl --unix-socket /var/run/docker.sock -X POST http:/v1.33/networks/kafka-net-ci1/connect -H "Content-Type: application/json" -d "{\"Container\":\"$HOSTNAME\"}"'
+        sh 'curl --unix-socket /var/run/docker.sock -X POST http:/v1.33/networks/kafka-net-ci1/connect -H "Content-Type: application/json" -d "{\\"Container\\":\\"$HOSTNAME\\"}"'
       }
     }
     stage('Test') {
@@ -42,7 +42,7 @@ pipeline {
       }
       post {
         always {
-          sh 'curl --unix-socket /var/run/docker.sock -X POST http:/v1.33/networks/kafka-net-ci1/disconnect -H "Content-Type: application/json" -d "{\"Container\":\"$HOSTNAME\",\"force\":\"true\"}"'
+          sh 'curl --unix-socket /var/run/docker.sock -X POST http:/v1.33/networks/kafka-net-ci1/disconnect -H "Content-Type: application/json" -d "{\\"Container\\":\\"$HOSTNAME\\",\\"force\\":\\"true\\"}"'
           sh 'curl -sX POST http://clustercontrol:8080/marketplace/undeploy/kafka/0.11.0.1?wait=true -H "Content-Type: application/json" -H "Accept: text/html" -d \'{"uniqueId":"ci1"}\''            
         }
       }
