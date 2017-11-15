@@ -13,7 +13,7 @@ pipeline {
   stages {
     stage('Create environment') {
       steps {
-        sh 'curl -sX POST http://clustercontrol:8080/marketplace/deploy/kafka/0.11.0.1 -H "Content-Type: application/json" -H "Accept: text/html" -d \'{"uniqueId":"ci1","brokerPort":"11092"}\''
+        sh 'curl -sX POST http://clustercontrol:8080/marketplace/deploy/kafka/0.11.0.1?wait=true -H "Content-Type: application/json" -H "Accept: text/html" -d \'{"uniqueId":"ci1","brokerPort":"11092"}\''
       }
     }
     stage('Clean') {
@@ -35,12 +35,12 @@ pipeline {
       steps {
         sh 'mvn surefire:test'
       }
-    }
-    stage('Remove environment') {
-      steps {
-        sh 'curl -sX POST http://clustercontrol:8080/marketplace/undeploy/kafka/0.11.0.1 -H "Content-Type: application/json" -H "Accept: text/html" -d \'{"uniqueId":"ci1"}\''
+      post {
+        always {
+          sh 'curl -sX POST http://clustercontrol:8080/marketplace/undeploy/kafka/0.11.0.1?wait=true -H "Content-Type: application/json" -H "Accept: text/html" -d \'{"uniqueId":"ci1"}\''            
+        }
       }
-    }    
+    }
     stage('Package') {
       steps {
         sh 'mvn jar:jar shade:shade'
@@ -51,7 +51,7 @@ pipeline {
         sh 'mvn -s $SETTINGS_XML docker:build -DpushImage'
       }
     }
-  }
+  } 
   
   post {
     always {
