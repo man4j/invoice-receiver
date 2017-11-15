@@ -2,7 +2,7 @@ pipeline {
   agent {
     docker {
       image 'maven'
-      args '-v /var/run/docker.sock:/var/run/docker.sock -v ${PWD}/.m2:/root/.m2 --network clustercontrol-net -e brokerList=kafka-dc1-ci1:11092,kafka-dc2-ci1:11092,kafka-dc3-ci1:11092'
+      args '-v /var/run/docker.sock:/var/run/docker.sock -v ${PWD}/.m2:/root/.m2 --network clustercontrol-net --network kafka-net-ci1 -e brokerList=kafka-dc1-ci1:11092,kafka-dc2-ci1:11092,kafka-dc3-ci1:11092'
     }    
   }
   
