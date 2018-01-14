@@ -8,6 +8,8 @@ import org.protobeans.kafka.annotation.EnableKafkaMessaging;
 import org.protobeans.mvc.MvcEntryPoint;
 import org.protobeans.mvc.annotation.EnableMvc;
 import org.protobeans.undertow.annotation.EnableUndertow;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -26,6 +28,8 @@ import services.invoicesender.model.Invoice;
 @EnableKafkaMessaging(brokerList = "s:brokerList")
 @ComponentScan(basePackageClasses = {InvoiceController.class})
 public class Main {
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+    
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
     
@@ -43,6 +47,8 @@ public class Main {
             Invoice invoice = new Invoice("seller_" + UUID.randomUUID().toString().substring(0, 8).replaceAll("-", ""), "customer_" + UUID.randomUUID().toString().substring(0, 8).replaceAll("-", ""));
         
             kafkaTemplate.send("invoices", invoice.getSeller(), mapper.writeValueAsString(invoice)).get();
+            
+            logger.info("Invoice sent to: " + invoice.getSeller());
             
             Thread.sleep(100);
         }
