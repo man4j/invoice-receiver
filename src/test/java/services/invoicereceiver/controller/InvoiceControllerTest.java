@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.protobeans.mvc.config.MvcInitializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -17,8 +16,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import services.invoicereceiver.Main;
-import services.invoicereceiver.model.Invoice;
+import services.invoicesender.Main;
+import services.invoicesender.model.Invoice;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes=Main.class)
@@ -29,9 +28,6 @@ public class InvoiceControllerTest {
     
     private MockMvc mockMvc;
     
-    @Autowired
-    private KafkaAdmin kafkaAdmin;
-    
     @Before
     public void initMockMvc() {
         mockMvc = MockMvcBuilders.webAppContextSetup(MvcInitializer.rootApplicationContext).build();
@@ -39,8 +35,6 @@ public class InvoiceControllerTest {
 
     @Test
     public void shouldWork() throws Exception {
-        kafkaAdmin.initialize();
-        
         mockMvc.perform(MockMvcRequestBuilders.post("/invoice")
                                               .contentType(MediaType.APPLICATION_JSON)
                                               .content(mapper.writeValueAsString(new Invoice("seller1", "customer1"))))

@@ -38,7 +38,7 @@ pipeline {
     }
     stage('Test') {
       steps {
-        sh 'mvn -DbrokerList=kafka-dc1-$HOSTNAME:9092,kafka-dc2-$HOSTNAME:9092,kafka-dc3-$HOSTNAME:9092 surefire:test'
+        sh 'mvn -DbrokerList=kafka-1-$HOSTNAME:9092,kafka-2-$HOSTNAME:9092,kafka-3-$HOSTNAME:9092 surefire:test'
       }
       post {
         always {

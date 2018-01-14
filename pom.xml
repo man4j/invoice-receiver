@@ -3,7 +3,7 @@
 
   <groupId>org.protobeans</groupId>
   <version>0.1</version>
-  <artifactId>invoice-receiver</artifactId>
+  <artifactId>invoice-sender</artifactId>
   <packaging>jar</packaging>
   
   <properties>
@@ -72,7 +72,7 @@
         <configuration>
           <transformers>
             <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-              <mainClass>services.invoicereceiver.Main</mainClass>
+              <mainClass>services.invoicesender.Main</mainClass>
             </transformer>
             <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
             <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">

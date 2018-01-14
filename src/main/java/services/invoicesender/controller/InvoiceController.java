@@ -1,4 +1,4 @@
-package services.invoicereceiver.controller;
+package services.invoicesender.controller;
 
 import java.util.concurrent.ExecutionException;
 
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import services.invoicereceiver.model.Invoice;
+import services.invoicesender.model.Invoice;
 
 @RestController
 @RequestMapping("/invoice")
