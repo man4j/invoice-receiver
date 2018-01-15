@@ -11,7 +11,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <protobeans.version>0.1.5</protobeans.version>
+    <protobeans.version>0.1.6</protobeans.version>
     <version.spring>5.0.1.RELEASE</version.spring>
   </properties>
   
