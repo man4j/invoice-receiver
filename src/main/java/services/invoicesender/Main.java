@@ -43,7 +43,7 @@ public class Main {
     
     @Bean
     public NewTopic invoicesTopic() {
-        return new NewTopic("invoices", 24, (short) 2);
+        return new NewTopic("invoices", 24, (short) 3);
     }
     
     @PostConstruct
