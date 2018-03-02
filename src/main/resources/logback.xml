@@ -1,0 +1,47 @@
+<configuration>
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>[%level] %d{dd.MM.yy HH:mm:ss.SSS} [%thread] %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+  
+  <appender name="LOGSTASH" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <append>true</append>
+    
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>logs/logstash.log.%d{yyyy-MM-dd}</fileNamePattern>
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+    
+    <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+      <enableContextMap>true</enableContextMap>
+      <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+        <maxDepthPerThrowable>30</maxDepthPerThrowable>
+        <maxLength>2048</maxLength>
+        <shortenedClassNameLength>20</shortenedClassNameLength>
+        <exclude>sun\.reflect\..*\.invoke.*</exclude>
+        <exclude>net\.sf\.cglib\.proxy\.MethodProxy\.invoke</exclude>
+        <rootCauseFirst>true</rootCauseFirst>
+      </throwableConverter>
+    </encoder>
+  </appender>
+  
+  <appender name="LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <append>true</append>
+    
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>logs/app.log.%d{yyyy-MM-dd}</fileNamePattern>
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+    
+    <encoder>
+      <pattern>[%level] %d{dd.MM.yy HH:mm:ss.SSS} [%thread] %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+     
+  <root level="info">
+    <appender-ref ref="STDOUT" />
+    <appender-ref ref="LOGSTASH" />
+    <appender-ref ref="LOG" />
+  </root>
+</configuration>
