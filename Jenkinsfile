@@ -13,7 +13,7 @@ pipeline {
   stages {
     stage('Create environment') {
       steps {
-        sh 'curl -sX POST http://clustercontrol:8080/marketplace/deploy/kafka/1.0.0?wait=true -H "Content-Type: application/json" -H "Accept: text/html" -d "{\\"namespace\\":\\"$HOSTNAME\\"}"'
+        sh 'curl -sX POST http://clustercontrol:8080/marketplace/deploy/kafka/1.0.0?wait=true -H "Content-Type: application/json" -H "Accept: text/html" -d "{\\"namespace\\":\\"$HOSTNAME\\", \\"KAFKA_MUTEX\\":\\"28888\\", \\"ZOOKEEPER_MUTEX\\":\\"28889\\"}"'
       }
     }
     stage('Clean') {
