@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.kafka.core.KafkaTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,9 +35,6 @@ public class Main {
     private KafkaTemplate<String, String> kafkaTemplate;
     
     @Autowired
-    private KafkaAdmin kafkaAdmin;
-    
-    @Autowired
     private ObjectMapper mapper;
     
     @Bean
@@ -47,12 +43,7 @@ public class Main {
     }
     
     @PostConstruct
-    void sendInvoices() throws InterruptedException {
-        while (!kafkaAdmin.initialize()) {
-            System.out.println("Wait kafka broker...");
-            Thread.sleep(3_000);
-        }
-
+    void sendInvoices() {
         sendThread = new Thread() {
             @Override
             public void run() {
